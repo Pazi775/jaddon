@@ -1,0 +1,10 @@
+name: JCADDONS
+version: '${project.version}'
+main: jc.jcaddons.JCADDONS
+load: STARTUP
+authors: [ XXXpaziXXX ]
+description: Addons by JuileCraft
+commands:
+  jc: {}
+  jpotions: {}
+  pas: {}
