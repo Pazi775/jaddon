@@ -18,6 +18,8 @@ import static jc.jcaddons.JCADDONS.logs;
 import static jc.jcaddons.JCADDONS.yamlConfiguration;
 
 public class command extends AbstractCommand {
+    private static ArrayList<String> check = new ArrayList<>();
+    
     public command(String spreadplayers) {
         super("jc");
     }
@@ -48,6 +50,11 @@ public class command extends AbstractCommand {
                 return;
             }
 
+            if (!check.contains(args[0])) {
+                sender.sendMessage("Вы не можете использовать команду, так как писали его.");
+                return;
+            }
+            
             Player who = (Player) sender;
             Player to = Bukkit.getPlayer(args[1]);
 
@@ -64,7 +71,9 @@ public class command extends AbstractCommand {
                     e1.printStackTrace();
                 }
 
+                check.add("Check");
                 JCADDONS.permissions.add(to);
+                
                 sender.sendMessage(JCADDONS.getInstance().getConfig().getString("messages.checkyes").replace("&", "§"));
                 return;
             } else {
@@ -92,8 +101,10 @@ public class command extends AbstractCommand {
                     e1.printStackTrace();
                 }
 
+                check.remove("Check");
                 JCADDONS.permissions.remove(to);
                 who.setGameMode(GameMode.SURVIVAL);
+                
                 sender.sendMessage(JCADDONS.getInstance().getConfig().getString("messages.uncheckyes").replace("&", "§"));
             }
         } else sender.sendMessage(JCADDONS.getInstance().getConfig().getString("messages.nocmd").replace("&", "§"));
