@@ -3,6 +3,7 @@ package jc.jcaddons;
 import jc.jcaddons.Listener.EventListener;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -11,8 +12,11 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public final class JCADDONS extends JavaPlugin {
+    public static Map<Player, Location> loc = new HashMap<>();
     public static ArrayList<Player> permissions = new ArrayList<>();
     private static JCADDONS instance;
 

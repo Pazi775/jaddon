@@ -9,8 +9,8 @@ import java.util.Date;
 import java.util.List;
 
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
+import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -41,17 +41,20 @@ public class command extends AbstractCommand {
             sender.sendMessage(JCADDONS.getInstance().getConfig().getString("messages.reload.yes").replace("&", "§"));
             return;
         }
-
         else if (args[0].equalsIgnoreCase("check")) {
             if (!sender.hasPermission("jc.check")) {
                 sender.sendMessage(JCADDONS.getInstance().getConfig().getString("messages.checknoprm").replace("&", "§"));
                 return;
             }
-
             Player who = (Player) sender;
             Player to = Bukkit.getPlayer(args[1]);
+            if (JCADDONS.permissions.contains(to)) {
+                sender.sendMessage("Вы не можете использовать команду, так как писали его.");
+                return;
+            }
 
             if (to != null) {
+                JCADDONS.loc.put(who, who.getLocation());
                 who.teleport(to.getLocation());
                 who.setGameMode(GameMode.SPECTATOR);
 
@@ -65,6 +68,7 @@ public class command extends AbstractCommand {
                 }
 
                 JCADDONS.permissions.add(to);
+
                 sender.sendMessage(JCADDONS.getInstance().getConfig().getString("messages.checkyes").replace("&", "§"));
                 return;
             } else {
@@ -83,6 +87,7 @@ public class command extends AbstractCommand {
             Player to = Bukkit.getPlayer(args[1]);
 
             if (to != null) {
+                who.teleport(JCADDONS.loc.get(who));
                 JCADDONS.getLogs().set(to.getName() + "." + "offХЕЛПЕР", who.getName());
                 JCADDONS.getLogs().set(to.getName() + "." + "ДАТА", date);
 
